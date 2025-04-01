@@ -75,11 +75,13 @@ namespace TicketsApiFunction
             {
                 await conn.OpenAsync(); // Note the ASYNC
 
-                var query = @"INSERT INTO dbo.Ticket (email, name, phone, quantity, creditCard, expiration, securityCode, address, city, province, postalCode, country) VALUES (@Email, @Name, @Phone, @Quantity, CreditCard, @Expiration, @SecurityCode, @Address, @City, @Province, @PostalCode, @Country);";
+                var query = @"INSERT INTO Tickets (concertId, email, Name, phone, quantity, creditCard, expiration, securityCode, address, city, province, postalCode, country)
+                                            VALUES (@concertId, @email, @Name, @phone, @quantity, @creditCard, @expiration, @securityCode, @address, @city, @province, @postalCode, @country);";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     // Adding SQL parameters safely
+                    cmd.Parameters.AddWithValue("@concertId", ticket.ConcertId);
                     cmd.Parameters.AddWithValue("@Email", ticket.Email);
                     cmd.Parameters.AddWithValue("@Name", ticket.Name);
                     cmd.Parameters.AddWithValue("@Phone", ticket.Phone);
